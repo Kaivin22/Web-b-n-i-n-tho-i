@@ -1,0 +1,29 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block main--content %}
+<div class="container mt-3 ">  
+  <div class="row justify-content-center">  
+    <div class="col-lg-6">
+      <div class="box-element">
+        <a class="btn btn-outline-dark" href="{% url 'checkout' %}">&#x2190; Quay lại</a>
+        <hr>
+        <h3>Hóa đơn</h3>
+        <hr>
+        <p>Ngày giờ: {{ now|date:"j-m-Y H:i:s" }}</p>
+        <hr>
+        {% for item in items %}
+          <div class="cart-row">
+            <div style="flex:2"><img class="row-image" src="{{ item.product.imageurl }}"></div>
+            <div style="flex:2"><p>{{ item.product.name }}</p></div>
+            <div style="flex:1"><p>{{ item.product.price }} VND</p></div>
+            <div style="flex:1"><p>{{ item.quantity }}</p></div>
+          </div>
+        {% endfor %}
+        <h5>Số sản phẩm: {{ order.get_cart_items }}</h5>
+        <h5>Thành tiền: {{ order.get_cart_total }} VND</h5>
+        <button type="button" onclick="alert('Thanh toán thành công!')">Thanh toán</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock main--content %}
