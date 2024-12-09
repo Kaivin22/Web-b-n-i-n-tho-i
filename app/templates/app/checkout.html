@@ -4,7 +4,7 @@
      <div class="row" style="width:100%">
 		<div class="col-lg-6">
 			<div class="box-element" id="form-wrapper">
-				<form id="EventForm" method="POST" action="{% url 'invoice_detail' %}"> {% csrf_token %}
+				<form id="EventForm" method="POST" action="{% url 'invoice_detail' %}">
 					{% csrf_token %}
 					<div id="user-info">
 						<div class="form-field">
@@ -32,7 +32,7 @@
 
 					<hr>
 					
-						<button type="submit">Lưu</button> 
+						<button onclick="window.location.href = '{% url 'invoice_detail' %}'">Lưu</button> 
 						
 					
 				</form>
@@ -47,9 +47,9 @@
 
 		<div class="col-lg-6">
 			<div class="box-element">
-				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Quay lại</a>
 				<hr>
-				<h3>Order Summary</h3>
+				
 				<hr>
 				{%for item in items%}
 				<div class="cart-row">
@@ -59,8 +59,8 @@
 					<div style="flex:1"><p>{{item.quantity}}</p></div>
 				</div>
 				{%endfor%}
-				<h5>Items: {{order.get_cart_items}}</h5>
-				<h5>Total: {{order.get_cart_total}} VND</h5>
+				<h5>Sản phẩm: {{order.get_cart_items}}</h5>
+				<h5>Tổng tiền: {{order.get_cart_total | floatformat:0}} VND</h5>
 			</div>
 		</div>
 	</div>

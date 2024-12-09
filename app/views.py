@@ -5,6 +5,7 @@ import json
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -88,7 +89,7 @@ def checkout(request):
         order.save()
 
         messages.success(request, 'Thông tin giao hàng đã được lưu! Bạn có thể tiếp tục thanh toán.')
-        return redirect('payment')
+        return redirect('invoice_detail')
 
     context = {'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'app/checkout.html', context)
@@ -113,14 +114,29 @@ def updateItem(request):
 
 def register(request):
     form = CreateUserForm()
-    
+
     if request.method == "POST":
         form = CreateUserForm(request.POST)
+
         if form.is_valid():
-            form.save()
-            return redirect('login')
-    context = {'form':form}
-    return render(request,'app/register.html',context = {'form':form})
+            # Kiểm tra tên người dùng có tồn tại không
+            username = form.cleaned_data.get('username')
+            if User.objects.filter(username=username).exists():
+                form.add_error('username', 'Tên người dùng đã tồn tại. Vui lòng chọn tên khác.')
+            
+            # Kiểm tra email có tồn tại không
+            email = form.cleaned_data.get('email')
+            if User.objects.filter(email=email).exists():
+                form.add_error('email', 'Email này đã được đăng ký. Vui lòng sử dụng email khác.')
+
+            # Nếu form vẫn hợp lệ sau khi kiểm tra, lưu người dùng
+            if not form.errors:
+                form.save()
+                return redirect('login')  # Redirect đến trang đăng nhập sau khi đăng ký thành công
+
+    context = {'form': form}
+    return render(request, 'app/register.html', context)
+
 def loginPage(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -197,8 +213,13 @@ def invoice_detail(request):
         items = []
         order = {'get_cart_items': 0, 'get_cart_total': 0}
         cartItems = order['get_cart_items']
-    
-
     context = {'items': items, 'order': order, 'cartItems': cartItems, 'now': now}
     return render(request, 'app/invoice_detail.html', context)
 
+def lichsu(request):
+    if request.user.is_authenticated:
+        # Sử dụng trường `date_order` thay vì `date_ordered`
+        orders = Order.objects.filter(customer=request.user).order_by('-date_order')
+        return render(request, 'app/lichsu.html', {'orders': orders})
+    else:
+        return redirect('login')

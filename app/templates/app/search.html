@@ -20,8 +20,8 @@
                 <h6><strong>{{product.name}}</strong></h6>
                 <br />
                 
-                <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Thêm vào giỏ hàng</button>
-                <a class="btn btn-outline-success" href="#">Xem</a>
+                <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart" style="border-radius: 50px;">Thêm vào giỏ hàng</button>
+                <a class="btn btn-outline-success" href="{% url 'detail' %}?id={{product.id}}" style="border-radius: 50px;">Xem</a>
                 <h3 class="display: inline-block; float: right"><strong>{{product.price | floatformat:0}} VND</strong></h3>
                 
             </div>

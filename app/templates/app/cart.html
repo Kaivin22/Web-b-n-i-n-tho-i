@@ -11,10 +11,10 @@
 			<br>
 			<table class="table">
 				<tr>
-					<th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
-					<th><h5>Total:<strong>{{order.get_cart_total | floatformat:0}}</strong></h5></th>
+					<th><h5>Sản phẩm: <strong>{{order.get_cart_items}}</strong></h5></th>
+					<th><h5>Tổng tiền:<strong>{{order.get_cart_total | floatformat:0}}</strong></h5></th>
 					<th>
-						<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+						<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Đặt hàng</a>
 					</th>
 				</tr>
 			</table>
@@ -25,10 +25,10 @@
 		<div class="box-element">
 			<div class="cart-row">
 				<div style="flex:2"></div>
-				<div style="flex:2"><strong>Item</strong></div>
-				<div style="flex:1"><strong>Price</strong></div>
-				<div style="flex:1"><strong>Quantity</strong></div>
-				<div style="flex:1"><strong>Total</strong></div>
+				<div style="flex:2"><strong>Sản phẩm</strong></div>
+				<div style="flex:1"><strong>Giá</strong></div>
+				<div style="flex:1"><strong>Số lượng</strong></div>
+				<div style="flex:1"><strong>Tổng tiền</strong></div>
 			</div>
 			
 			<div class="cart-row">
